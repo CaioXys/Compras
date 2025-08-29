@@ -1,20 +1,78 @@
+using Compras.Models;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+
 namespace Compras.Views;
 
 public partial class ListaProduto : ContentPage
 {
-	public ListaProduto()
-	{
-		InitializeComponent();
-	}
+    ObservableCollection<Produto> lista = new ObservableCollection<Produto>();
+    public ListaProduto()
+    {
+        InitializeComponent();
+
+        lst_produtos.ItemsSource = lista;
+    }
+
+    protected async override void OnAppearing()
+    {
+        List<Produto> tmp = await App.Db.GetAll();
+
+        tmp.ForEach(i => lista.Add(i));
+    }
 
     private void ToolbarItem_Clicked(object sender, EventArgs e)
     {
-		try
-		{
-			Navigation.PushAsync(new Views.NovoProduto());
-		} catch (Exception ex)
-		{
-			DisplayAlert("Ops", ex.Message, "OK");
-		}
+        try
+        {
+            Navigation.PushAsync(new Views.NovoProduto());
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Ops", ex.Message, "OK");
+        }
+    }
+
+    private async void txt_search_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        string q = e.NewTextValue;
+
+        lista.Clear();
+
+        List<Produto> tmp = await App.Db.Search(q);
+
+        tmp.ForEach(i => lista.Add(i));
+    }
+
+    private void ToolbarItem_Clicked_1(object sender, EventArgs e)
+    {
+        double soma = lista.Sum(i => i.Total);
+
+        string msg = $"O total é {soma:C}";
+
+        DisplayAlert("Total dos produtos", msg, "OK");
+    }
+
+    private async void MenuItem_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            MenuItem selecionado = sender as MenuItem;
+
+            Produto p = selecionado.BindingContext as Produto;
+
+            bool confirm = await DisplayAlert("Tem certeza?", $"Remover {p.Descricao}?", "Sim", "Não");
+
+            if (confirm)
+            {
+                await App.Db.DeleteProduto(p.Id);
+                lista.Remove(p);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ops", ex.Message, "OK");
+        }
+    
     }
 }
