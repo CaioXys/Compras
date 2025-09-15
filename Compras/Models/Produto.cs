@@ -28,5 +28,7 @@ namespace Compras.Models
         {
             get => Quantidade * Preco; 
         }
+
+        public DateTime DataCadastro { get; set; }
     }
 }

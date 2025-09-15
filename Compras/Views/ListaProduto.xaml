@@ -7,6 +7,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Somar" Clicked="ToolbarItem_Clicked_1"/>
         <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Text="Relatório" Clicked="ToolbarItem_Clicked_2"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Resources>

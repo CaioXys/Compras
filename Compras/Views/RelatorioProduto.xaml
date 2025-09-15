@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Compras.Views.RelatorioPage"
+             Title="Relatório de Compras">
+	<VerticalStackLayout Padding="15" Spacing="10">
+
+		<Label Text="Filtrar por Período" FontSize="20" FontAttributes="Bold" />
+
+		<Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+			<VerticalStackLayout Grid.Column="0">
+				<Label Text="Data de Início:" />
+				<DatePicker x:Name="pckDataInicio" Format="dd/MM/yyyy" />
+			</VerticalStackLayout>
+
+			<VerticalStackLayout Grid.Column="1">
+				<Label Text="Data Final:" />
+				<DatePicker x:Name="pckDataFim" Format="dd/MM/yyyy" />
+			</VerticalStackLayout>
+		</Grid>
+
+		<Button x:Name="btnGerarRelatorio" Text="Gerar Relatório" Clicked="btnGerarRelatorio_Clicked" />
+
+		<Line Stroke="LightGray" Margin="0,10" />
+
+		<Label Text="Resultados" FontSize="20" FontAttributes="Bold" />
+
+		<CollectionView x:Name="cv_produtos">
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<Frame Padding="10" Margin="0,5" CornerRadius="5" BorderColor="LightGray">
+						<Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, Auto">
+							<Label Grid.Row="0" Grid.Column="0" Text="{Binding Descricao}" FontSize="16" FontAttributes="Bold" />
+							<Label Grid.Row="0" Grid.Column="1" Text="{Binding Preco, StringFormat='{0:C}'}" HorizontalOptions="End" />
+							<Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding DataCadastro, StringFormat='Comprado em: {0:dd/MM/yyyy}'}" FontSize="12" TextColor="Gray" />
+						</Grid>
+					</Frame>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+
+	</VerticalStackLayout>
+</ContentPage>

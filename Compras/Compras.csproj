@@ -57,6 +57,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Views\RelatorioProduto.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Remove="Views\RelatorioProduto.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
@@ -71,6 +79,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\NovoProduto.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\RelatorioPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
